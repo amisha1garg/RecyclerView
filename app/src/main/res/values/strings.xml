@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">RecyclerView</string>
+    <string-array name="food_menu">
+        <item >Burger</item>
+        <item >Frech_fries</item>
+        <item >Gol_gappe</item>
+        <item >Kachori</item>
+        <item >Momos</item>
+        <item >Pizza</item>
+        <item >Samosa</item>
+        <item >Sub</item>
+        <item >Sweet_corn</item>
+        <item >Sweets</item>
+    </string-array>
+    
+    <string-array name="price">
+        <item>Rs. 50.</item>
+        <item>Rs. 55</item>
+        <item>Rs. 25</item>
+        <item>Rs. 35</item>
+        <item>Rs. 75</item>
+        <item>Rs. 125</item>
+        <item>Rs. 15</item>
+        <item>Rs. 95</item>
+        <item>Rs. 45</item>
+        <item>Rs. 250</item>
+    </string-array>
+</resources>
