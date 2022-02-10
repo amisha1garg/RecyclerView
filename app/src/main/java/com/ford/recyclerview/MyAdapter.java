@@ -10,50 +10,64 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    String data1[], data2[];
-    int images[];
+
     Context context;
 
-    public MyAdapter (Context ct, String[] s1, String[] s2, int img[]){
+    private ArrayList<Menu> menuArrayList;
+
+    public MyAdapter() {
+        this.menuArrayList = new ArrayList<Menu>();
+    }
+
+    public MyAdapter(Context ct, ArrayList<Menu> menuArrayList) {
         context = ct;
-        data1 = s1;
-        data2 = s2;
-        images = img;
+        this.menuArrayList = menuArrayList;
+
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-       View view = inflater.inflate(R.layout.my_row,parent,false);
-       return new MyViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.my_row, parent, false);
+        return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        holder.textView1.setText(data1[position]);
-        holder.textView2.setText(data2[position]);
-        holder.imageView.setImageResource(images[position]);
+        holder.nameText.setText(menuArrayList.get(position).getName());
+        holder.priceText.setText(menuArrayList.get(position).getPrice());
+        holder.imageView.setImageResource(menuArrayList.get(position).getImageIcon());
 
     }
 
     @Override
     public int getItemCount() {
-        return images.length;
+        return menuArrayList.size();
+    }
+
+    public void updateMenu(final ArrayList<Menu> menuArrayList) {
+        this.menuArrayList.clear();
+        this.menuArrayList =  menuArrayList;
+        notifyDataSetChanged();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textView1;
-        TextView textView2;
+        TextView nameText;
+        TextView priceText;
         ImageView imageView;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView1=itemView.findViewById(R.id.food_item);
-            textView2=itemView.findViewById(R.id.price);
+            nameText = itemView.findViewById(R.id.food_item);
+            priceText = itemView.findViewById(R.id.price);
             imageView = itemView.findViewById(R.id.imageView);
         }
     }

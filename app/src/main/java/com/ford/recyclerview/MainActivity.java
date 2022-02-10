@@ -1,38 +1,47 @@
 package com.ford.recyclerview;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.lifecycle.ViewModelProviders;
+
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
-    String s1[], s2[];
+public class MainActivity extends AppCompatActivity implements LifecycleOwner {
+
     RecyclerView recyclerView;
-    int [] images={R.drawable.burger,
-            R.drawable.french_fries,
-            R.drawable.gol_gappe,
-            R.drawable.kachori,
-            R.drawable.momos,
-            R.drawable.pizza,
-            R.drawable.samosa,
-            R.drawable.sub,
-            R.drawable.sweet_corn,
-            R.drawable.sweets};
+    MainViewModel viewModel;
+    MainActivity context;
+    MyAdapter myAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recyclerView);
+        context = this;
 
-        s1 = getResources().getStringArray(R.array.food_menu);
-        s2 = getResources().getStringArray(R.array.price);
 
-        MyAdapter myAdapter = new MyAdapter(this,s1,s2,images);
+        myAdapter = new MyAdapter();
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        viewModel = ViewModelProviders.of(context).get(MainViewModel.class);
+        viewModel.getUserMutableLiveData().observe(context, userListUpdateObserver);
     }
+
+    Observer<ArrayList<Menu>> userListUpdateObserver = new Observer<ArrayList<Menu>>() {
+        @Override
+        public void onChanged(ArrayList<Menu> menuArrayList) {
+            myAdapter.updateMenu(menuArrayList);
+        }
+    };
+
+
 }
